@@ -105,6 +105,7 @@ class _Config:
         self._service_account = None
         self._api_endpoint = None
         self._api_transport = None
+        self._tool_contexts_to_append = []
 
     def init(
         self,
@@ -475,6 +476,13 @@ class _Config:
                 )
         except Exception:  # pylint: disable=broad-exception-caught
             pass
+
+        if self._tool_contexts_to_append:
+            # Must append to gapic_version due to b/259738581.
+            gapic_version = (
+                f"{gapic_version}+{'+'.join(self._tool_contexts_to_append[::-1])}"
+            )
+        print("gapic_version: ", gapic_version)
 
         user_agent = f"{constants.USER_AGENT_PRODUCT}/{gapic_version}"
         if appended_user_agent:
