@@ -23,7 +23,9 @@ from unittest import mock
 import vertexai
 from google.cloud.aiplatform import initializer
 from vertexai import generative_models
-from vertexai.preview import generative_models as preview_generative_models
+from vertexai.preview import (
+    generative_models as preview_generative_models,
+)
 from vertexai.generative_models._generative_models import (
     prediction_service,
     gapic_prediction_service_types,
@@ -279,6 +281,10 @@ class TestGenerativeModels:
             response1.candidates[0].content.parts[0].function_call.name
             == "get_current_weather"
         )
+        assert [
+            function_call.name
+            for function_call in response1.candidates[0].function_calls
+        ] == ["get_current_weather"]
         response2 = chat.send_message(
             generative_models.Part.from_function_response(
                 name="get_current_weather",

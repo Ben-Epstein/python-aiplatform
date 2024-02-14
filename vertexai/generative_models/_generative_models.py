@@ -1351,6 +1351,16 @@ class Candidate:
     def text(self) -> str:
         return self.content.text
 
+    @property
+    def function_calls(self) -> Sequence[gapic_tool_types.FunctionCall]:
+        if not self.content or not self.content.parts:
+            return []
+        return [
+            part.function_call
+            for part in self.content.parts
+            if part and part.function_call
+        ]
+
 
 class Content:
     r"""The multi-part content of a message.
