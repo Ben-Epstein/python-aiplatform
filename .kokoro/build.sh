@@ -16,10 +16,11 @@
 set -eo pipefail
 
 if [[ -z "${PROJECT_ROOT:-}" ]]; then
-    PROJECT_ROOT="github/python-aiplatform"
+    PROJECT_ROOT="${KOKORO_ARTIFACTS_DIR}/github/python-aiplatform"
 fi
 
 cd "${PROJECT_ROOT}"
+mkdir -p output
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
@@ -50,10 +51,32 @@ if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]]; then
   trap cleanup EXIT HUP
 fi
 
+if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]]; then
+  echo "====.  continuous"
+  SPONGE_FILE_NAME="sponge_log.xml"
+fi
+
+if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"presubmit"* ]]; then
+  echo "====.  presubmit"
+  SPONGE_FILE_NAME="sponge_log.xml"
+fi
+
 # If NOX_SESSION is set, it only runs the specified session,
 # otherwise run all the sessions.
 if [[ -n "${NOX_SESSION:-}" ]]; then
     python3 -m nox -s ${NOX_SESSION:-}
 else
     python3 -m nox
+fi
+
+echo "===== TEST KOKORO_ARTIFACTS_DIR ======"
+pwd
+echo "===== ls -R $KOKORO_ARTIFACTS_DIR ======"
+ls -R $KOKORO_ARTIFACTS_DIR
+
+if [[ -e "${SPONGE_FILE_NAME}" ]]; then
+  echo "====== file exists... copying... ======"
+  cp sponge_log.xml output/sponge_log.xml
+  chmod -R -x+X output/sponge_log.xml
+  ls -lR $KOKORO_ARTIFACTS_DIR
 fi
