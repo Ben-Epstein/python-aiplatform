@@ -124,6 +124,8 @@ class VertexRayClientBuilder(client_builder.ClientBuilder):
                 f"[Ray on Vertex AI]: Local runtime has Ray version {local_ray_verion}, but the cluster runtime has {cluster.ray_version}. Please ensure that the Ray versions match."
             )
         super().__init__(address)
+        print("Saved credentials", self._credentials)
+        print("Saved metadata", self._metadata)
 
     def connect(self) -> _VertexRayClientContext:
         # Can send any other params to ray cluster here
