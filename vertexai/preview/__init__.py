@@ -17,13 +17,11 @@
 
 from google.cloud.aiplatform.metadata import metadata
 
-from vertexai.preview import developer
-from vertexai.preview import hyperparameter_tuning
 from vertexai.preview import initializer
 from vertexai.preview import tabular_models
-from vertexai.preview._workflow.driver import (
-    remote as remote_decorator,
-)
+#from vertexai.preview._workflow.driver import (
+#    remote as remote_decorator,
+#)
 from vertexai.preview._workflow.shared import (
     model_utils,
 )
@@ -31,8 +29,8 @@ from vertexai.preview._workflow.shared import (
 
 global_config = initializer.global_config
 init = global_config.init
-remote = remote_decorator.remote
-VertexModel = remote_decorator.VertexModel
+#remote = remote_decorator.remote
+#VertexModel = remote_decorator.VertexModel
 register = model_utils.register
 from_pretrained = model_utils.from_pretrained
 
@@ -52,8 +50,8 @@ log_classification_metrics = metadata._experiment_tracker.log_classification_met
 
 __all__ = (
     "init",
-    "remote",
-    "VertexModel",
+#    "remote",
+#    "VertexModel",
     "register",
     "from_pretrained",
     "start_run",
@@ -63,7 +61,5 @@ __all__ = (
     "log_metrics",
     "log_time_series_metrics",
     "log_classification_metrics",
-    "developer",
-    "hyperparameter_tuning",
     "tabular_models",
 )
