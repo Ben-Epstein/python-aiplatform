@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.43.1](https://github.com/googleapis/python-aiplatform/compare/v1.43.0...v1.43.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* GenAI - Fixed `get_tuned_model` deploying the model every time ([e1c7870](https://github.com/googleapis/python-aiplatform/commit/e1c7870aabe4fac5537589f49484509b3faf3f5b))
+
+
+### Documentation
+
+* Fixed the documentation generation ([63ad1bf](https://github.com/googleapis/python-aiplatform/commit/63ad1bf9e365d2f10b91e2fd036e3b7d937336c0))
+
 ## [1.43.0](https://github.com/googleapis/python-aiplatform/compare/v1.42.1...v1.43.0) (2024-02-29)
 
 
